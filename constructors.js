@@ -192,9 +192,6 @@ function Spell(name, cost, description){
            } else {
                return false;
            }
-       } else if (!spell) {
-           console.log(spell, "this is not a spell");
-           return false;
        } else {
            return false;
        }
