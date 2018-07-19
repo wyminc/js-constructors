@@ -98,6 +98,19 @@ function Spell(name, cost, description){
     }
  }
 
+ Spellcaster.prototype.spendMana = function(cost) {
+     if(this.mana < cost) {
+         this.mana = this.mana;
+         console.log("Not enough mana to cast spell")
+         return false;
+     } else {
+         this.mana = this.mana - cost;
+         return true;
+     }
+ }
+
+ 
+
   /**
    * @method inflictDamage
    *
@@ -145,3 +158,60 @@ function Spell(name, cost, description){
    * @param  {Spellcaster} target         The spell target to be inflicted.
    * @return {boolean}                    Whether the spell was successfully cast.
    */
+
+   Spellcaster.prototype.invoke = function(spell, target) {
+       console.log(spell, "What is the initial spell?");
+       if((spell instanceof(DamageSpell) === true) || (spell instanceof (Spell) === true)) {
+           console.log(spell, "This is not null");
+           if (spell instanceof(DamageSpell) === true) {
+               console.log(spell, "this is a damage spell");
+               if (target instanceof(Spellcaster) === true) {
+                   console.log(target, "This is target");
+                   if(this.mana >= spell.cost) {
+                       console.log(spell.cost, "Cost of the spell you are casting");
+                       console.log(spell.damage, "Damage of the spell you are casting");
+                       console.log(this.spendMana, "spend mana function is real");
+                       console.log(this.inflictDamage,"inflict damage function is real");
+                       this.spendMana(spell.cost);
+                       target.inflictDamage(spell.damage);
+                       return true;
+                   } else {
+                       return false;
+                   }
+               } else {
+                   return false;
+               }
+           } else if (spell instanceof(Spell) === true) {
+               console.log(spell, "this is a regular spell");
+               if(this.mana >= spell.cost) {
+                this.spendMana(spell.cost);
+                return true;
+               } else {
+                   return false;
+               }
+           } else {
+               return false;
+           }
+       } else if (!spell) {
+           console.log(spell, "this is not a spell");
+           return false;
+       } else {
+           return false;
+       }
+   }
+
+//   Spellcaster.prototype.invoke = function(spell, target) {
+//       if(Spell instanceof(Spell)) {
+//           return false;
+//       } else if((spell instanceof(DamageSpell) === true) && (target instanceof(Spellcaster) === true)) {
+//             if(this.spendMana(spell.cost) === true) {
+//                 this.spendMana(spell.cost);
+//                 this.inflictDamage();
+//                 return true;
+//             } else {
+//                 return false;
+//             }
+//       } else {
+//           return false;
+//       }
+//   }
